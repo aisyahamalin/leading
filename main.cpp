@@ -33,13 +33,16 @@ int main() {
     star pedro; //calling it pedro
     pedro.setstar(x, v); //setting the positions x and velocities v for pedro //instantiating the object
     
-    pedro.printcoords();
+    pedro.printcoords(); //printing the initial values to terminal
+
+
 
     //-----------------------------------------------------------------
     //-----------------------------------------------------------------
     //defining the step-length //which is a constant throughout code
     double h = 1.0e-5;  //unit of timeperiod is: 1 Gyr //here, time-step h is 1 000 years
     //note: my original 1.0e-6 == 1000 years
+    // 1.0e-5 == 10 000 years
     //-----------------------------------------------------------------
     //defining the parameter constant e
     double e = 1.0e-7; //1.0e-7; //my original 1.0e-7
@@ -53,16 +56,13 @@ int main() {
     double E_o = kin + pot;
     double Eo;
     //-----------------------------------------------------------------
-
     cout << E_o << " " << r << endl;
 
-    delete [] x; //deleting the allocated memory
-    delete [] v; //deleting from the heap
 
     potential Phi; //calling it Phi //making an instance of potential called phi
 
 
-    
+
     //LEAPFROG=========================================================================================
     ofstream myfile ("coor_frog.dat", std::ios_base::app);
     ofstream file ("EL_frog.dat", std::ios_base::app);
@@ -84,7 +84,11 @@ int main() {
     myfile.close();
     file.close();
     //=======================================================================================
-    //RUNGE-KUTTA===============================================================================
+    //RUNGE-KUTTA========================================================================================
+    pedro.setstar(x, v); //setting the positions x and velocities v for pedro //instantiating the object again for Runge-Kutta
+    delete [] x; //deleting the allocated memory
+    delete [] v; //deleting from the heap
+    //-----------------------------------------------------------------------------
     ofstream myfile2 ("coor_RK.dat", std::ios_base::app);
     ofstream file2 ("EL_RK.dat", std::ios_base::app);
 
