@@ -27,7 +27,7 @@ int main() {
     double *x = new double[DIMENSION];  //value of pointer allocated dynamical memory
     double *v = new double[DIMENSION];  //to create a memory (of actual values) in the heap
     //the values of each array
-    x[0] = 8.4; x[1] = 0.0; x[2] = 0.0; //note: our sun is about 8kpc from centre
+    x[0] = 7.4; x[1] = 0.0; x[2] = 0.0; //note: our sun is about 8kpc from centre
     v[0] = 0.0; v[1] = 1.0; v[2] = 0.6; //velocities in units of km/s
 
     star pedro; //calling it pedro
