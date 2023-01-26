@@ -73,7 +73,7 @@ int main() {
             //declaring the E_o inside integrator
             Eo = pedro.setEo(E_o);
             //the leapfrog for that particular star
-            pedro.leapfrog(h, &Phi); 
+            pedro.frog.leapfrog(h, &Phi, &getf); 
             }
  
         //pedro.printcoords();         //printing the new coordinates after applying the leapfrog
