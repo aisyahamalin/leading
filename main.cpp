@@ -84,32 +84,32 @@ int main() {
     myfile.close();
     file.close();
     //=======================================================================================
-    //RUNGE-KUTTA========================================================================================
-    pedro.setstar(x, v); //setting the positions x and velocities v for pedro //instantiating the object again for Runge-Kutta
-    delete [] x; //deleting the allocated memory
-    delete [] v; //deleting from the heap
-    //-----------------------------------------------------------------------------
-    ofstream myfile2 ("coor_RK.dat", std::ios_base::app);
-    ofstream file2 ("EL_RK.dat", std::ios_base::app);
+    // //RUNGE-KUTTA========================================================================================
+    // pedro.setstar(x, v); //setting the positions x and velocities v for pedro //instantiating the object again for Runge-Kutta
+    // delete [] x; //deleting the allocated memory
+    // delete [] v; //deleting from the heap
+    // //-----------------------------------------------------------------------------
+    // ofstream myfile2 ("coor_RK.dat", std::ios_base::app);
+    // ofstream file2 ("EL_RK.dat", std::ios_base::app);
 
-    for (int i = 0; i < 1000; i++) {   //one thousand times //how many times you print to file
-        for (int ii = 0; ii < 100000; ii++) { //for each one time out of a thousand, do it 100,000 times
-                                             //actually implementing the integrator
-            dt = pedro.settime(e);
-            //declaring the E_o inside integrator
-            Eo = pedro.setEo(E_o);
-            //the actual integrator
-            pedro.runge_kutta(h, &Phi);
-            }
+    // for (int i = 0; i < 1000; i++) {   //one thousand times //how many times you print to file
+    //     for (int ii = 0; ii < 100000; ii++) { //for each one time out of a thousand, do it 100,000 times
+    //                                          //actually implementing the integrator
+    //         dt = pedro.settime(e);
+    //         //declaring the E_o inside integrator
+    //         Eo = pedro.setEo(E_o);
+    //         //the actual integrator
+    //         pedro.runge_kutta(h, &Phi);
+    //         }
 
-        //pedro.printcoords();         //printing the new coordinates after applying the leapfrog
-        pedro.printqp(myfile2);
-        pedro.printEL(file2);
-        }
+    //     //pedro.printcoords();         //printing the new coordinates after applying the leapfrog
+    //     pedro.printqp(myfile2);
+    //     pedro.printEL(file2);
+    //     }
 
-    myfile2.close();
-    file2.close();
-    //=======================================================================================
+    // myfile2.close();
+    // file2.close();
+    // //=======================================================================================
 
 
     return 0;

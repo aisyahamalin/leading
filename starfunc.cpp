@@ -30,6 +30,19 @@ void star::setstar(double *x, double *v) {
         p[i] = v[i];   // assigning the velocity
     }
 }//----------------------------------------------------------------------------------------------------
+
+
+
+//new getter function for q and p 
+void star::getstar(double *pos, double *vel){
+    for (int i = 0; i < DIMENSION; i++) {
+        q[i] = pos[i];   
+        p[i] = vel[i];   
+    }
+}
+
+
+
 //void function for printing the coordinates to screen
 void star::printcoords() {
     for (int i = 0; i < DIMENSION; i++) {
@@ -84,6 +97,14 @@ double star::tolE(potential *Phi){
 }//---------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------
 //print functions
+
+    // E = getE(Phi); //executes the energy at each integration step
+    // azi = getazi();
+    // getcross(); //to evaluate the momentum
+    // radius = getr();
+    // tol = tolE(Phi);
+
+
 void star::printqp(ofstream& fileoutqp){
     fileoutqp << q[0] << " " << q[1] << " " << q[2] << " " << p[0] << " " << p[1] << " " << p[2] << endl; 
 }
@@ -99,123 +120,3 @@ double star::settime(double e){
     double dt;
     return dt = e*mod_R/mod_V;
 }//----------------------------------------------------------------------------------------------------
-
-
-//==========================================================================================
-//============================================================================================
-//Leapfrog method
-//void function for the drift [updating the position of x, y, z each time]
-void star::drift(double h) {
-        for (int i = 0; i < DIMENSION; i++) {
-            q[i] += (h*p[i]);
-        } //position += h*velocity
-}
-//void function for the kick [updating the velocity using force/acceleration]
-void star::kick(double h, double *force) {
-    for (int i = 0; i < DIMENSION; i++) {
-        p[i] += h*force[i];
-    } //velocity += h*force  (force is the acceleration with point mass m)
-}
-//void function for the leapfrog method!!!
-void star::leapfrog(double h, potential *Phi) {
-    double h2 = h*0.5;
-    double *force = new double[3];  //'new' operator requesting to allocate memory dynamically, here there are 3 elements...
-    getforce(force, Phi);
-    drift(h2);        //drift
-    kick(h, force);   //kick
-    drift(h2);        //drift
-    
-    delete [] force; //deleting memory so it won't take up space allocated by the 'new' operator
-    
-    E = getE(Phi); //executes the energy at each integration step
-    azi = getazi();
-    getcross(); //to evaluate the momentum
-    radius = getr();
-    tol = tolE(Phi);
-
-
-}
-//================================================================================================
-//===================================================================================================
-
-//===============================================================================================
-//==============================================================================================
-
-/*
-//under construction
-void star::analyticr(double azi){
-    double razi
-    double a = 8.4
-    double e = L*L/GM
-
-    razi = a * (1 - e*e) / (1 + e * cos(azi))
-    return razi
-}
-
-*/ 
-
-
-
-//RK4 method
-void star::runge_kutta(double h, potential *Phi){
-    
-    double *force = new double[3]; //creating memory from the pointer
-    getforce(force, Phi);
-    stepA(h,force);
-    stepB(h,force);
-    stepC(h,force);
-    stepD(h,force);
-    
-    //for x, y, z directions
-    for (int i = 0; i < DIMENSION; i++){
-        //position q update
-        q[i] += h/6.0 *(k1r[i] + k2r[i] + k3r[i] + k4r[i]);
-        //velocity p update
-        p[i] += h/6.0 *(k1v[i] + k2v[i] + k3v[i] + k4v[i]);
-        
-        /*
-        eps[i] += L[i]*L[i] /GM ;
-        a[i] += L[i]*L[i] /(GM*(1.0-(eps[i]*eps[i]))) ;*/
-    }
-
-    delete [] force;
-
-    E = getE(Phi);
-    azi = getazi();
-    getcross(); //to evaluate the momentum
-    radius = getr();
-    tol = tolE(Phi);
-
-}
-//==================================================================================
-//in each step, loop over each array element
-//the derivative in the k1 direction
-void star::stepA(double h, double *force){
-    for (int i = 0; i < DIMENSION; i++){
-        k1r[i] = p[i];     //k1r = velocity
-        k1v[i] = force[i];     //k1v = acceleration
-    }
-}
-//the derivative in the k2 direction
-void star::stepB(double h, double *force){
-    for (int i = 0; i < DIMENSION; i++){
-        k2r[i] = p[i] + k1r[i]*h/2.0;   //velocity + k1r h/2
-        k2v[i] = force[i] + k1v[i]*h/2.0;   //accel + k1v h/2
-    }
-}
-//the derivative in the k3 direction
-void star::stepC(double h, double *force){
-    for (int i = 0; i < DIMENSION; i++){
-        k3r[i] = p[i] + k2r[i]*h/2.0;//velocity + k2r h/2
-        k3v[i] = force[i] + k2v[i]*h/2.0;  //accel + k2v h/2
-    }
-}
-//the derivative in the k4 direction
-void star::stepD(double h, double *force){
-    for (int i = 0; i < DIMENSION; i++){
-        k4r[i] = p[i] + k3r[i]*h;     //velocity + k3r h
-        k4v[i] = force[i] + k3v[i]*h;     //accel + k3v h
-    }
-}
-//================================================================================
-//=================================================================================

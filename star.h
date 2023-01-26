@@ -32,6 +32,10 @@ private:
 
 public:
     void setstar(double *x, double *v); // a constructor
+//a getter for frog
+    void getstar(double *pos, double *vel);
+
+
     void printcoords();                
     void getforce(double *force, potential *Phi);
     void printqp(ofstream& fileoutqp);
@@ -44,19 +48,6 @@ public:
     double getr();
     double setEo(double E_o);
     double tolE(potential *Phi);
-
-
-    //leapfrog function
-    void leapfrog(double h, potential *Phi);
-    void drift(double h);
-    void kick(double h, double *force);
-    
-    //function for applying the RK4 method
-    void runge_kutta(double h, potential *Phi);
-    void stepA(double h, double *force);
-    void stepB(double h, double *force);
-    void stepC(double h, double *force);
-    void stepD(double h, double *force);
 };
 //======================================================================
 //=======================================================================
