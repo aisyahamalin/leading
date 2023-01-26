@@ -64,8 +64,8 @@ int main() {
 
 
     //LEAPFROG=========================================================================================
-    ofstream myfile ("coor_frog.dat", std::ios_base::app);
-    ofstream file ("EL_frog.dat", std::ios_base::app);
+    ofstream myfile ("coor_frog.dat", std::ios_base::trunc);
+    ofstream file ("EL_frog.dat", std::ios_base::trunc);
     for (int i = 0; i < 1000; i++) {   //one thousand times //how many times you print to file
         for (int ii = 0; ii < 100000; ii++) { //for each one time out of a thousand, do it 100,000 times
                                              //actually implementing the leapfrog //if using h=1 000 yr --> means 100,000,000 years
